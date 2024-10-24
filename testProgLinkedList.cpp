@@ -48,8 +48,52 @@ int main()                                      //Line 4
     cout << "Line 26: After deleting "
          << num << ", list2: " << endl;         //Line 26
     list2.print();                              //Line 27
-    cout << endl;                               //Line 28
+    cout << endl;
 
-    return 0;					                //Line 29
-}                                               //Line 30
+    orderedLinkedList<int> list3, list4;
+    cout << "You will now be prompted to make two lists, which will be merged. " << endl;
+    cout << "Enter numbers ending "
+         << "with -999." << endl;
+    cin >> num;
 
+    while (num != -999)
+    {
+        list3.insert(num);
+        cin >> num;
+    }
+
+    cout << "Enter numbers ending "
+         << "with -999." << endl;
+    cin >> num;
+
+    while (num != -999)
+    {
+        list4.insert(num);
+        cin >> num;
+    }
+
+    cout << endl;
+
+    cout << "List 3: ";
+    list3.print();
+    cout << endl;
+    cout << "List 4: ";
+    list4.print();
+    cout << endl;
+
+    orderedLinkedList<int> list5;
+    list5.mergeLists(list3, list4);
+    cout << "Lists have been merged." << endl;
+
+    cout << "List 3: ";
+    list3.print();
+    cout << endl;
+    cout << "List 4: ";
+    list4.print();
+    cout << endl;
+    cout << "List 5: ";
+    list5.print();
+    cout << endl;
+
+    return 0;
+}

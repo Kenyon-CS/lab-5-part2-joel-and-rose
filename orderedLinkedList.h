@@ -47,6 +47,13 @@ public:
       //    of the new list, and count is decremented by 1. If
       //    deleteItem is not in the list, an appropriate message
       //    is printed.
+    
+    void mergeLists(orderedLinkedList<Type> &list1,
+         orderedLinkedList<Type> &list2);
+        //This function creates a new list by merging the
+        //elements of list1 and list2.
+        //Postcondition: first points to the merged list; list1
+        // and list2 are empty
 };
 
 template <class Type>
@@ -191,5 +198,73 @@ void orderedLinkedList<Type>::deleteNode(const Type& deleteItem)
     }
 }//end deleteNode
 
+template<class Type>
+void orderedLinkedList<Type>::mergeLists(orderedLinkedList<Type> &list1, orderedLinkedList<Type> &list2)
+{
+    nodeType<Type> *list1Current;
+    nodeType<Type> *list2Current;
+
+    if (!list1.isEmptyList() && !list2.isEmptyList()) {
+        // since both aren't empty, set both to the start
+        list1Current = list1.first;
+        list2Current = list2.first;
+
+        // add all elements except for the last
+        while (list1Current != NULL && list2Current != NULL) {
+            if (list1Current == NULL) {
+                insert(list2Current->info);
+                list2Current = list2Current->link;
+            }
+            else if (list2Current == NULL) {
+                insert(list1Current->info);
+                list1Current = list1Current->link;
+            }
+            else {
+                if (list1Current->info < list2Current->info) {
+                    insert(list1Current->info);
+                    list1Current = list1Current->link;
+                }
+                else {
+                    insert(list2Current->info);
+                    list2Current = list2Current->link;
+                }
+            }
+        }
+
+        // add the last element, which is mysteriously excluded above
+        if (list1.last->info >= list2.last->info) {
+            insert(list1.last->info);
+        }
+        else {
+            insert(list2.last->info);
+        }
+    }
+    // if only list1 isn't empty, just add everything
+    // from list1 to the merged list
+    else if (!list1.isEmptyList()) {
+        list1Current = list1.first;
+        while (list1Current != NULL) {
+            insert(list1Current->info);
+            list1Current = list1Current->link;
+        }
+    }
+    // if only list2 isn't empty, just add everything
+    // from list2 to the merged list
+    else if (!list2.isEmptyList()) {
+        list2Current = list2.first;
+        while (list2Current != NULL) {
+            insert(list2Current->info);
+            list2Current = list2Current->link;
+        }
+    }
+    else {
+        return;
+    }
+
+    // now empty the original lists
+    list1.destroyList();
+    list2.destroyList();
+    
+}//end mergeLists
 
 #endif
